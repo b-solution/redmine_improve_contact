@@ -1,3 +1,6 @@
 = redmine_improve_contact
 
-Description goes here
+ A Simple way to remove duplicate contacts in redmine_contacts plugin
+ 
+ to remove contacts duplication:
+rake redmine:improve_contacts:clear RAILS_ENV=production
