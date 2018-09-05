@@ -23,7 +23,7 @@ module RedmineImproveContacts
         end
         if @contact.save
           flash[:notice] = l(:notice_successful_create)
-          remove_old_avatars
+          attach_avatar
           respond_to do |format|
             format.html { redirect_to (params[:continue] ?  {:action => "new", :project_id => @project} : {:action => "show", :project_id => @project, :id => @contact} )}
             format.js
@@ -37,7 +37,6 @@ module RedmineImproveContacts
           end
         end
       end
-
     end
   end
 end
