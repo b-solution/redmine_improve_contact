@@ -14,12 +14,14 @@ module RedmineImproveContacts
         @contact = Contact.new(:project => @project, :author => User.current)
         @contact.safe_attributes = params[:contact]
         @contact.save_attachments(params[:attachments] || (params[:contact] && params[:contact][:uploads]))
-        if contacts = @contact.other_same_contacts and contacts.present?
-          @contact = contacts.first
-          @contact_exist = true
-        elsif contacts = @contact.other_same_contacts_for_phone and contacts.present?
-          @contact = contacts.first
-          @contact_exist = true
+        unless ['.', 'n/a'].include?( @contact.first_name) or ['.', 'n/a'].include?( @contact.last_name)
+          if contacts = @contact.other_same_contacts and contacts.present?
+            @contact = contacts.first
+            @contact_exist = true
+          elsif contacts = @contact.other_same_contacts_for_phone and contacts.present?
+            @contact = contacts.first
+            @contact_exist = true
+          end
         end
         if @contact.save
           flash[:notice] = l(:notice_successful_create)
